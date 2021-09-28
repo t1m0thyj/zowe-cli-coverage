@@ -22,4 +22,5 @@ jobs:
 
     - run: node index.js
 
+    - run: cat results/2021/09/28.csv
     # TODO Commit results file
