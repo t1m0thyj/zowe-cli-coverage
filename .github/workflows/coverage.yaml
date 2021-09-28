@@ -18,6 +18,8 @@ jobs:
         node-version: 'lts/*'
         cache: 'npm'
 
+    - run: npm ci
+
     - run: node index.js
 
     # TODO Commit results file
