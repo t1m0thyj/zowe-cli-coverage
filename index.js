@@ -24,7 +24,7 @@ const uglifyJs = require("uglify-js");
 
             if (collectCoverage) {
                 const output = await exec.getExecOutput("npm", ["run", `test:${k}`], { cwd: tempDir });
-                const numTests = parseInt(output.stdout.match(/^Tests:\s+.+, (\d+) total/)[1]);
+                const numTests = parseInt(output.stderr.match(/^Tests:\s+.+, (\d+) total/)[1]);
                 const lcovFile = path.join(tempDir, v, "lcov.info");
                 const lcovInfo = parseLcov(fs.readFileSync(lcovFile, "utf-8"));
                 let foundLines = 0;
