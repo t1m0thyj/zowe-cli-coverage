@@ -5,7 +5,7 @@ const jsYaml = require("js-yaml");
 // const parseLcov = require("parse-lcov");
 
 (async () => {
-    const config = jsYaml.load("config.yaml");
+    const config = jsYaml.load(fs.readFileSync("config.yaml", "utf-8"));
 
     for (const [repo, tests] of Object.entries(config.projects)) {
         const tempDir = fs.mkdtempSync("zowe");
@@ -20,4 +20,7 @@ const jsYaml = require("js-yaml");
 
         fs.rmdirSync(tempDir, { recursive: true, force: true });
     }
-})();
+})().catch((error) => {
+    console.error(error);
+    process.exit(1);
+});
