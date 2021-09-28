@@ -24,7 +24,7 @@ const uglifyJs = require("uglify-js");
 
             const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--", "--listTests"], { cwd: tempDir });
             let numTests = 0;
-            for (const testFile in output.stdout.split("\n")) {
+            for (const testFile of output.stdout.split("\n")) {
                 const testContents = fs.readFileSync(testFile, "utf-8");
                 const minTestContents = uglifyJs.minify(testContents).code;
                 numTests += (minTestContents.match(/\bit\(/g) || []).length;
