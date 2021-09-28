@@ -13,8 +13,7 @@ const stripComments = require("strip-comments");
     for (const [repo, tests] of Object.entries(config.projects)) {
         const tempDir = fs.mkdtempSync("zowe");
         await gitClone(`https://github.com/${repo}.git`, tempDir);
-        fs.appendFileSync(path.join(tempDir, ".npmrc"), "ignore-scripts=true");
-        await exec.exec("npm", ["ci"], { cwd: tempDir });
+        await exec.exec("npm", ["install"], { cwd: tempDir });
         await exec.exec("npm", ["run", "build"], { cwd: tempDir });
 
         for (const [k, v] of Object.entries(tests)) {
@@ -23,7 +22,7 @@ const stripComments = require("strip-comments");
                 continue;
             }
 
-            const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--", "--listTests"], { cwd: tempDir });
+            const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--ignore-scripts", "--", "--listTests"], { cwd: tempDir });
             let numTests = 0;
             for (const testFile of output.stdout.trim().split("\n").filter(line => line.startsWith("/"))) {
                 const testContents = stripComments(fs.readFileSync(testFile, "utf-8"));
