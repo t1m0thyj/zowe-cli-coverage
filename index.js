@@ -26,7 +26,7 @@ const uglifyJs = require("uglify-js");
                 const output = await exec.getExecOutput("npm", ["run", `test:${k}`], { cwd: tempDir });
                 const numTests = parseInt(output.stderr.match(/^Tests:\s+.+, (\d+) total/m)[1]);
                 const lcovFile = path.join(tempDir, v, "lcov.info");
-                const lcovInfo = parseLcov(fs.readFileSync(lcovFile, "utf-8"));
+                const lcovInfo = parseLcov.default(fs.readFileSync(lcovFile, "utf-8"));
                 let foundLines = 0;
                 let hitLines = 0;
                 for (const record of lcovInfo) {
