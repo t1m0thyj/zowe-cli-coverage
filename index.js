@@ -3,6 +3,7 @@ const path = require("path");
 const exec = require("@actions/exec");
 const gitClone = require("git-clone/promise");
 const jsYaml = require("js-yaml");
+const padLeft = require("pad-left");
 const parseLcov = require("parse-lcov");
 const stripComments = require("strip-comments");
 
@@ -50,9 +51,9 @@ const stripComments = require("strip-comments");
     }
 
     const date = new Date();
-    const year = date.getFullYear().toString();
-    const month = ("0" + date.getMonth().toString()).slice(-2);
-    const day = ("0" + date.getDay().toString()).slice(-2);
+    const year = date.getUTCFullYear().toString();
+    const month = padLeft((date.getUTCMonth() + 1).toString(), 2, "0");
+    const day = padLeft(date.getUTCDate().toString(), 2, "0");
     const dateDir = path.join("results", year, month);
     fs.mkdirSync(dateDir, { recursive: true });
     fs.writeFileSync(path.join(dateDir, `${day}.csv`), csvLines.join("\n"));

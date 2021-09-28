@@ -13,6 +13,7 @@
     "@actions/exec": "^1.1.0",
     "git-clone": "^0.2.0",
     "js-yaml": "^4.1.0",
+    "pad-left": "^2.1.0",
     "parse-lcov": "^1.0.4",
     "strip-comments": "^2.0.1"
   }
