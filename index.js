@@ -22,9 +22,16 @@ const uglifyJs = require("uglify-js");
                 continue;
             }
 
+            const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--", "--listTests"], { cwd: tempDir });
+            let numTests = 0;
+            for (const testFile in output.stdout.split("\n")) {
+                const testContents = fs.readFileSync(testFile, "utf-8");
+                const minTestContents = uglifyJs.minify(testContents).code;
+                numTests += (minTestContents.match(/\bit\(/g) || []).length;
+            }
+
             if (collectCoverage) {
-                const output = await exec.getExecOutput("npm", ["run", `test:${k}`], { cwd: tempDir });
-                const numTests = parseInt(output.stderr.match(/^Tests:\s+.+, (\d+) total/m)[1]);
+                await exec.exec("npm", ["run", `test:${k}`], { cwd: tempDir });
                 const lcovFile = path.join(tempDir, v, "lcov.info");
                 const lcovInfo = parseLcov.default(fs.readFileSync(lcovFile, "utf-8"));
                 let foundLines = 0;
@@ -36,13 +43,6 @@ const uglifyJs = require("uglify-js");
                 const percentCoverage = (hitLines / foundLines * 100).toFixed(2);
                 csvLines.push(`${repo},${k},${numTests},${percentCoverage},${hitLines},${foundLines}`);
             } else {
-                const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--", "--listTests"], { cwd: tempDir });
-                let numTests = 0;
-                for (const testFile in output.stdout.split("\n")) {
-                    const testContents = fs.readFileSync(testFile, "utf-8");
-                    const minTestContents = uglifyJs.minify(testContents).code;
-                    numTests += (minTestContents.match(/\bit\(/g) || []).length;
-                }
                 csvLines.push(`${repo},${k},${numTests}`);
             }
         }
