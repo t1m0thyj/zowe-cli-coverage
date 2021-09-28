@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const exec = require("@actions/exec");
 const gitClone = require("git-clone/promise");
 const jsYaml = require("js-yaml");
@@ -23,7 +24,7 @@ const uglifyJs = require("uglify-js");
 
             if (collectCoverage) {
                 const output = await exec.getExecOutput("npm", ["run", `test:${k}`], { cwd: tempDir });
-                const numTests = parseInt(output.stdout.match(/^Tests:\s+\d+ passed, (\d+) total/)[1]);
+                const numTests = parseInt(output.stdout.match(/^Tests:\s+.+, (\d+) total/)[1]);
                 const lcovFile = path.join(tempDir, v, "lcov.info");
                 const lcovInfo = parseLcov(fs.readFileSync(lcovFile, "utf-8"));
                 let foundLines = 0;
@@ -32,7 +33,8 @@ const uglifyJs = require("uglify-js");
                     foundLines += record.found;
                     hitLines += record.hit;
                 }
-                csvLines.push(`${repo},${k},${numTests},${hitLines / foundLines * 100},${hitLines},${foundLines}`);
+                const percentCoverage = (hitLines / foundLines * 100).toFixed(2);
+                csvLines.push(`${repo},${k},${numTests},${percentCoverage},${hitLines},${foundLines}`);
             } else {
                 const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--", "--listTests"], { cwd: tempDir });
                 let numTests = 0;
