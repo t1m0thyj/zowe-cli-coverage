@@ -15,7 +15,7 @@ projects:
     unit: __tests__/__results__/unit/coverage
     system: true
   "zowe/zowe-cli-ftp-plugin":
-    unit: __tests__/__results__/unit/coverage
+    unit: __tests__/__results__/coverage
     system: true
   "zowe/zowe-cli-ims-plugin":
     unit: __tests__/__results__/unit/coverage
