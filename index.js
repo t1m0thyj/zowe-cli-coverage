@@ -30,7 +30,7 @@ const stripComments = require("strip-comments");
             }
 
             if (collectCoverage) {
-                await exec.exec("npm", ["run", `test:${k}`], { cwd: tempDir });
+                await exec.exec("npm", ["run", `test:${k}`], { cwd: tempDir, ignoreReturnCode: true });
                 const lcovFile = path.join(tempDir, v, "lcov.info");
                 const lcovInfo = parseLcov.default(fs.readFileSync(lcovFile, "utf-8"));
                 let foundLines = 0;
