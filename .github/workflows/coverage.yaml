@@ -1,0 +1,23 @@
+name: Zowe CLI Coverage
+
+on:
+  schedule:
+  - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js LTS
+      uses: actions/setup-node@v2
+      with:
+        node-version: 'lts'
+        cache: 'npm'
+
+    - run: node index.js
+
+    # TODO Commit results file

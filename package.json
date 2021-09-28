@@ -1,0 +1,18 @@
+{
+  "name": "zowe-cli-coverage",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/exec": "^1.1.0",
+    "git-clone": "^0.2.0",
+    "js-yaml": "^4.1.0",
+    "parse-lcov": "^1.0.4"
+  }
+}

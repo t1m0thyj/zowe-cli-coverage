@@ -1,0 +1,30 @@
+projects:
+  "zowe/perf-timing":
+    unit: __tests__/__results__/unit/coverage
+  "zowe/imperative":
+    unit: __tests__/__results__/unit/coverage
+    integration: __tests__/__results__/integration/coverage
+  "zowe/zowe-cli":
+    unit: __tests__/__results__/unit/coverage
+    integration: __tests__/__results__/integration/coverage
+    system: true
+  "zowe/zowe-cli-cics-plugin":
+    unit: __tests__/__results__/unit/coverage
+    system: true
+  "zowe/zowe-cli-db2-plugin":
+    unit: __tests__/__results__/unit/coverage
+    system: true
+  "zowe/zowe-cli-ftp-plugin":
+    unit: __tests__/__results__/unit/coverage
+    system: true
+  "zowe/zowe-cli-ims-plugin":
+    unit: __tests__/__results__/unit/coverage
+    integration: __tests__/__results__/integration/coverage
+    system: true
+  "zowe/zowe-cli-mq-plugin":
+    unit: __tests__/__results__/unit/coverage
+    integration: __tests__/__results__/integration/coverage
+    system: true
+  "zowe/zowe-cli-scs-plugin":
+    unit: __tests__/__results__/unit/coverage
+    system: true
