@@ -7,24 +7,24 @@ projects:
   "zowe/zowe-cli":
     unit: __tests__/__results__/unit/coverage
     integration: true
-    system: true
+    system: false
   "zowe/zowe-cli-cics-plugin":
     unit: __tests__/__results__/unit/coverage
-    system: true
+    system: false
   "zowe/zowe-cli-db2-plugin":
     unit: __tests__/__results__/unit/coverage
-    system: true
+    system: false
   "zowe/zowe-cli-ftp-plugin":
     unit: __tests__/__results__/coverage
-    system: true
+    system: false
   "zowe/zowe-cli-ims-plugin":
     unit: __tests__/__results__/unit/coverage
     integration: true
-    system: true
+    system: false
   "zowe/zowe-cli-mq-plugin":
     unit: __tests__/__results__/unit/coverage
     integration: true
-    system: true
+    system: false
   "zowe/zowe-cli-scs-plugin":
     unit: __tests__/__results__/unit/coverage
-    system: true
+    system: false

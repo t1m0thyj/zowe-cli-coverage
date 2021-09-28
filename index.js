@@ -5,6 +5,7 @@ const gitClone = require("git-clone/promise");
 const jsYaml = require("js-yaml");
 const padLeft = require("pad-left");
 const parseLcov = require("parse-lcov");
+const stripColor = require("strip-color");
 const stripComments = require("strip-comments");
 
 (async () => {
@@ -18,31 +19,35 @@ const stripComments = require("strip-comments");
         await exec.exec("npm", ["run", "build"], { cwd: tempDir });
 
         for (const [k, v] of Object.entries(tests)) {
-            const collectCoverage = !(typeof v === "boolean" && v);
-            if (collectCoverage && typeof v !== "string") {
-                continue;
-            }
+            const collectCoverage = typeof v === "string";
+            const runTests = collectCoverage || (typeof v === "boolean" && v);
 
-            const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--ignore-scripts", "--", "--listTests"], { cwd: tempDir });
-            let numTests = 0;
-            for (const testFile of output.stdout.trim().split("\n").filter(line => line.startsWith("/"))) {
-                const testContents = stripComments(fs.readFileSync(testFile, "utf-8"));
-                numTests += (testContents.match(/\bit\(/g) || []).length;
-            }
+            if (runTests) {
+                const output = await exec.getExecOutput("npm", ["run", `test:${k}`], { cwd: tempDir, ignoreReturnCode: true });
+                const endOfStderr = stripColor(output.stderr.slice(-1024));
+                const numTests = endOfStderr.match(/^Tests:\s+.+, (\d+) total/m)[1];
 
-            if (collectCoverage) {
-                await exec.exec("npm", ["run", `test:${k}`], { cwd: tempDir, ignoreReturnCode: true });
-                const lcovFile = path.join(tempDir, v, "lcov.info");
-                const lcovInfo = parseLcov.default(fs.readFileSync(lcovFile, "utf-8"));
-                let foundLines = 0;
-                let hitLines = 0;
-                for (const record of lcovInfo) {
-                    foundLines += record.found;
-                    hitLines += record.hit;
+                if (collectCoverage) {
+                    const lcovFile = path.join(tempDir, v, "lcov.info");
+                    const lcovInfo = parseLcov.default(fs.readFileSync(lcovFile, "utf-8"));
+                    let foundLines = 0;
+                    let hitLines = 0;
+                    for (const { lines } of lcovInfo) {
+                        foundLines += lines.found;
+                        hitLines += lines.hit;
+                    }
+                    const percentCoverage = (hitLines / foundLines * 100).toFixed(2);
+                    csvLines.push(`${repo},${k},${numTests},${percentCoverage},${hitLines},${foundLines}`);
+                } else {
+                    csvLines.push(`${repo},${k},${numTests}`);
                 }
-                const percentCoverage = (hitLines / foundLines * 100).toFixed(2);
-                csvLines.push(`${repo},${k},${numTests},${percentCoverage},${hitLines},${foundLines}`);
             } else {
+                const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--", "--listTests"], { cwd: tempDir });
+                let numTests = 0;
+                for (const testFile of output.stdout.trim().split("\n").filter(line => line.startsWith("/"))) {
+                    const testContents = stripComments(fs.readFileSync(testFile, "utf-8"));
+                    numTests += (testContents.match(/\bit\(/g) || []).length;
+                }
                 csvLines.push(`${repo},${k},${numTests}`);
             }
         }
