@@ -4,7 +4,7 @@ const exec = require("@actions/exec");
 const gitClone = require("git-clone/promise");
 const jsYaml = require("js-yaml");
 const parseLcov = require("parse-lcov");
-const uglifyJs = require("uglify-js");
+const stripComments = require("strip-comments");
 
 (async () => {
     const config = jsYaml.load(fs.readFileSync("config.yaml", "utf-8"));
@@ -25,10 +25,8 @@ const uglifyJs = require("uglify-js");
             const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--", "--listTests"], { cwd: tempDir });
             let numTests = 0;
             for (const testFile of output.stdout.trim().split("\n").filter(line => line.startsWith("/"))) {
-                const testContents = fs.readFileSync(testFile, "utf-8");
-                const minTestContents = uglifyJs.minify(testContents).code;
-                console.log(testFile, minTestContents);
-                numTests += (minTestContents.match(/\bit\(/g) || []).length;
+                const testContents = stripComments(fs.readFileSync(testFile, "utf-8"));
+                numTests += (testContents.match(/\bit\(/g) || []).length;
             }
 
             if (collectCoverage) {
