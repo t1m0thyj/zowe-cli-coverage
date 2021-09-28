@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  coverage:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,7 +15,7 @@ jobs:
     - name: Use Node.js LTS
       uses: actions/setup-node@v2
       with:
-        node-version: 'lts'
+        node-version: 'lts/*'
         cache: 'npm'
 
     - run: node index.js
