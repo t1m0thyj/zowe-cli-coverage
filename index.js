@@ -27,6 +27,7 @@ const uglifyJs = require("uglify-js");
             for (const testFile of output.stdout.trim().split("\n").filter(line => line.startsWith("/"))) {
                 const testContents = fs.readFileSync(testFile, "utf-8");
                 const minTestContents = uglifyJs.minify(testContents).code;
+                console.log(testFile, minTestContents);
                 numTests += (minTestContents.match(/\bit\(/g) || []).length;
             }
 
