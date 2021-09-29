@@ -13,7 +13,7 @@ const stripComments = require("strip-comments");
     const csvLines = ["Project,Test Type,# Tests,% Coverage,Covered Lines,Total Lines"];
 
     for (const [repo, tests] of Object.entries(config.projects)) {
-        const tempDir = fs.mkdtempSync("zowe");
+        const tempDir = fs.mkdtempSync(repo.split("/")[0]);
         await gitClone(`https://github.com/${repo}.git`, tempDir);
         await exec.exec("npm", ["install"], { cwd: tempDir });
         await exec.exec("npm", ["run", "build"], { cwd: tempDir });

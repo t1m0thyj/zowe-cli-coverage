@@ -2,7 +2,7 @@ name: Zowe CLI Coverage
 
 on:
   schedule:
-  - cron: '0 0 * * *'
+  - cron: '0 0 * * 1'
   workflow_dispatch:
 
 jobs:
@@ -21,5 +21,7 @@ jobs:
 
     - run: node index.js
 
-    - run: cat results/2021/09/28.csv
-    # TODO Commit results file
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: 'Upload coverage results'
+        file_pattern: '*.csv'
