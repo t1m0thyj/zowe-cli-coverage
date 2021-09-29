@@ -39,7 +39,7 @@ const stripComments = require("strip-comments");
                     const percentCoverage = (hitLines / foundLines * 100).toFixed(2);
                     csvLines.push(`${repo},${k},${numTests},${percentCoverage},${hitLines},${foundLines}`);
                 } else {
-                    csvLines.push(`${repo},${k},${numTests}`);
+                    csvLines.push(`${repo},${k},${numTests},,,`);
                 }
             } else {
                 const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--", "--listTests"], { cwd: tempDir });
@@ -48,7 +48,7 @@ const stripComments = require("strip-comments");
                     const testContents = stripComments(fs.readFileSync(testFile, "utf-8"));
                     numTests += (testContents.match(/\bit\(/g) || []).length;
                 }
-                csvLines.push(`${repo},${k},${numTests}`);
+                csvLines.push(`${repo},${k},${numTests},,,`);
             }
         }
 
