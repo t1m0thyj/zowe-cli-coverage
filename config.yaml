@@ -4,6 +4,7 @@ projects:
   "zowe/imperative":
     unit: __tests__/__results__/unit/coverage
     integration: true
+    system: false
   "zowe/zowe-cli":
     unit: __tests__/__results__/unit/coverage
     integration: true
