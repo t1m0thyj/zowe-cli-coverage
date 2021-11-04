@@ -21,7 +21,13 @@ jobs:
 
     - run: node index.js
 
+    - uses: actions/upload-artifact@v2
+      with:
+        name: 'results'
+        path: '*.csv'
+
     - uses: stefanzweifel/git-auto-commit-action@v4
+      if: ${{ github.event_name == 'schedule' }}
       with:
         commit_message: 'Upload coverage results'
         file_pattern: '*.csv'
