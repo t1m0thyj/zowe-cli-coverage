@@ -16,7 +16,7 @@ projects:
     # Run "test:integration" NPM script and count number of tests.
     # `true` = Tests will run without reporting any coverage information.
     integration: true
-    # Dry-run "test:system" script and count number of tests.
+    # Dry-run "test:system" NPM script and count number of tests.
     # `false` = Test files will be scanned for number of "it" statements.
     system: false
 ```
