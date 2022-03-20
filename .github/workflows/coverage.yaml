@@ -29,5 +29,6 @@ jobs:
     - uses: stefanzweifel/git-auto-commit-action@v4
       if: ${{ github.event_name == 'schedule' }}
       with:
+        commit_author: GitHub Actions <actions@github.com>
         commit_message: 'Upload coverage results'
         file_pattern: '*.csv'
