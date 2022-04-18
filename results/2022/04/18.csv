@@ -1,0 +1,22 @@
+Project,Test Type,# Tests,% Coverage,Covered Lines,Total Lines
+zowe/perf-timing,unit,68,94.12,192,204
+zowe/imperative,unit,1040,80.48,5504,6839
+zowe/imperative,integration,1361,,,
+zowe/imperative,system,3,,,
+zowe/zowe-cli,unit,1230,90.31,4233,4687
+zowe/zowe-cli,integration,244,,,
+zowe/zowe-cli,system,933,,,
+zowe/zowe-cli-cics-plugin,unit,262,94.88,630,664
+zowe/zowe-cli-cics-plugin,system,183,,,
+zowe/zowe-cli-db2-plugin,unit,46,73.88,215,291
+zowe/zowe-cli-db2-plugin,system,30,,,
+zowe/zowe-cli-ftp-plugin,unit,52,72.56,603,831
+zowe/zowe-cli-ftp-plugin,system,114,,,
+zowe/zowe-cli-ims-plugin,unit,77,92.10,641,696
+zowe/zowe-cli-ims-plugin,integration,13,,,
+zowe/zowe-cli-ims-plugin,system,64,,,
+zowe/zowe-cli-mq-plugin,unit,16,93.69,104,111
+zowe/zowe-cli-mq-plugin,integration,2,,,
+zowe/zowe-cli-mq-plugin,system,3,,,
+zowe/zowe-cli-scs-plugin,unit,23,72.00,108,150
+zowe/zowe-cli-scs-plugin,system,11,,,
