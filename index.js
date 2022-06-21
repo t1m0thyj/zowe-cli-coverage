@@ -10,7 +10,7 @@ const stripComments = require("strip-comments");
 
 (async () => {
     const config = jsYaml.load(fs.readFileSync("config.yaml", "utf-8"));
-    const csvLines = ["Project,Test Type,# Tests,% Coverage,Covered Lines,Total Lines"];
+    const csvLines = ["Project,Test Type,# Tests,% Line Coverage,Covered Lines,Total Lines,% Branch Coverage,Covered Branches,Total Branches"];
 
     for (const [repo, tests] of Object.entries(config.projects)) {
         const tempDir = fs.mkdtempSync(repo.split("/")[0]);
@@ -32,12 +32,17 @@ const stripComments = require("strip-comments");
                     const lcovInfo = parseLcov.default(fs.readFileSync(lcovFile, "utf-8"));
                     let foundLines = 0;
                     let hitLines = 0;
-                    for (const { lines } of lcovInfo) {
+                    let foundBranches = 0;
+                    let hitBranches = 0;
+                    for (const { lines, branches } of lcovInfo) {
                         foundLines += lines.found;
                         hitLines += lines.hit;
+                        foundBranches += branches.found;
+                        hitBranches += branches.hit;
                     }
-                    const percentCoverage = (hitLines / foundLines * 100).toFixed(2);
-                    csvLines.push(`${repo},${k},${numTests},${percentCoverage},${hitLines},${foundLines}`);
+                    const lineCoverage = (hitLines / foundLines * 100).toFixed(2);
+                    const branchCoverage = (hitBranches / foundBranches * 100).toFixed(2);
+                    csvLines.push(`${repo},${k},${numTests},${lineCoverage},${hitLines},${foundLines},${branchCoverage},${hitBranches},${foundBranches}`);
                 } else {
                     csvLines.push(`${repo},${k},${numTests},,,`);
                 }
