@@ -10,7 +10,7 @@ const stripComments = require("strip-comments");
 
 (async () => {
     const config = jsYaml.load(fs.readFileSync("config.yaml", "utf-8"));
-    const csvLines = ["Project,Test Type,# Tests,% Line Coverage,Covered Lines,Total Lines,% Branch Coverage,Covered Branches,Total Branches"];
+    const csvLines = ["Project,Test Type,# Tests,% Line Coverage,Covered Lines,% Branch Coverage,Covered Branches"];
 
     for (const [repo, tests] of Object.entries(config.projects)) {
         const tempDir = fs.mkdtempSync(repo.split("/")[0]);
@@ -42,9 +42,9 @@ const stripComments = require("strip-comments");
                     }
                     const lineCoverage = (hitLines / foundLines * 100).toFixed(2);
                     const branchCoverage = (hitBranches / foundBranches * 100).toFixed(2);
-                    csvLines.push(`${repo},${k},${numTests},${lineCoverage},${hitLines},${foundLines},${branchCoverage},${hitBranches},${foundBranches}`);
+                    csvLines.push(`${repo},${k},${numTests},${lineCoverage},${hitLines}/${foundLines},${branchCoverage},${hitBranches}/${foundBranches}`);
                 } else {
-                    csvLines.push(`${repo},${k},${numTests},,,,,,`);
+                    csvLines.push(`${repo},${k},${numTests},,,,`);
                 }
             } else {
                 const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--", "--listTests"], { cwd: tempDir });
@@ -53,7 +53,7 @@ const stripComments = require("strip-comments");
                     const testContents = stripComments(fs.readFileSync(testFile, "utf-8"));
                     numTests += (testContents.match(/\bit\(/g) || []).length;
                 }
-                csvLines.push(`${repo},${k},${numTests},,,,,,`);
+                csvLines.push(`${repo},${k},${numTests},,,,`);
             }
         }
 
