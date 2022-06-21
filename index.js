@@ -44,7 +44,7 @@ const stripComments = require("strip-comments");
                     const branchCoverage = (hitBranches / foundBranches * 100).toFixed(2);
                     csvLines.push(`${repo},${k},${numTests},${lineCoverage},${hitLines},${foundLines},${branchCoverage},${hitBranches},${foundBranches}`);
                 } else {
-                    csvLines.push(`${repo},${k},${numTests},,,`);
+                    csvLines.push(`${repo},${k},${numTests},,,,,,`);
                 }
             } else {
                 const output = await exec.getExecOutput("npm", ["run", `test:${k}`, "--", "--listTests"], { cwd: tempDir });
@@ -53,7 +53,7 @@ const stripComments = require("strip-comments");
                     const testContents = stripComments(fs.readFileSync(testFile, "utf-8"));
                     numTests += (testContents.match(/\bit\(/g) || []).length;
                 }
-                csvLines.push(`${repo},${k},${numTests},,,`);
+                csvLines.push(`${repo},${k},${numTests},,,,,,`);
             }
         }
 
@@ -67,6 +67,7 @@ const stripComments = require("strip-comments");
     const dateDir = path.join("results", year, month);
     fs.mkdirSync(dateDir, { recursive: true });
     fs.writeFileSync(path.join(dateDir, `${day}.csv`), csvLines.join("\n"));
+    fs.linkSync(path.join(dateDir, `${day}.csv`), "coverage.csv");
 })().catch((error) => {
     console.error(error);
     process.exit(1);
