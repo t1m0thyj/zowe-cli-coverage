@@ -67,6 +67,9 @@ const stripComments = require("strip-comments");
     const dateDir = path.join("results", year, month);
     fs.mkdirSync(dateDir, { recursive: true });
     fs.writeFileSync(path.join(dateDir, `${day}.csv`), csvLines.join("\n"));
+    if (fs.existsSync("coverage.csv")) {
+        fs.unlinkSync("coverage.csv");
+    }
     fs.linkSync(path.join(dateDir, `${day}.csv`), "coverage.csv");
 })().catch((error) => {
     console.error(error);
