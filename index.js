@@ -70,7 +70,7 @@ const stripComments = require("strip-comments");
     if (fs.existsSync("coverage.csv")) {
         fs.unlinkSync("coverage.csv");
     }
-    fs.linkSync(path.join(dateDir, `${day}.csv`), "coverage.csv");
+    fs.symlinkSync(path.join(dateDir, `${day}.csv`), "coverage.csv");
 })().catch((error) => {
     console.error(error);
     process.exit(1);
