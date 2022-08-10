@@ -29,9 +29,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: 'results'
-        path: 'results/latest.csv'
-
-    - run: rm results/latest.csv
+        path: 'results/*.csv'
 
     - uses: stefanzweifel/git-auto-commit-action@v4
       if: ${{ github.event_name == 'schedule' || github.event.inputs.upload-results }}
