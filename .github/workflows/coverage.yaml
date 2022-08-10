@@ -32,7 +32,7 @@ jobs:
         path: 'results/*.csv'
 
     - uses: stefanzweifel/git-auto-commit-action@v4
-      if: ${{ github.event_name == 'schedule' || github.event.inputs.upload-results }}
+      if: ${{ github.event_name == 'schedule' || inputs.upload-results == true }}
       with:
         commit_author: GitHub Actions <actions@github.com>
         commit_message: 'Upload coverage results'
