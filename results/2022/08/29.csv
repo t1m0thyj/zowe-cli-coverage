@@ -1,0 +1,22 @@
+Project,Test Type,# Tests,% Line Coverage,Covered Lines,% Branch Coverage,Covered Branches
+zowe/perf-timing,unit,68,94.12,192/204,100.00,65/65
+zowe/imperative,unit,1618,88.45,8106/9164,81.96,4157/5072
+zowe/imperative,integration,409,,,,
+zowe/imperative,system,3,,,,
+zowe/zowe-cli,unit,1438,91.64,5241/5719,79.70,1665/2089
+zowe/zowe-cli,integration,266,,,,
+zowe/zowe-cli,system,1005,,,,
+zowe/zowe-cli-cics-plugin,unit,262,94.45,630/667,66.46,107/161
+zowe/zowe-cli-cics-plugin,system,183,,,,
+zowe/zowe-cli-db2-plugin,unit,46,73.13,215/294,66.67,32/48
+zowe/zowe-cli-db2-plugin,system,30,,,,
+zowe/zowe-cli-ftp-plugin,unit,52,72.46,605/835,55.15,91/165
+zowe/zowe-cli-ftp-plugin,system,114,,,,
+zowe/zowe-cli-ims-plugin,unit,77,91.47,343/375,61.67,37/60
+zowe/zowe-cli-ims-plugin,integration,13,,,,
+zowe/zowe-cli-ims-plugin,system,64,,,,
+zowe/zowe-cli-mq-plugin,unit,16,91.67,110/120,79.07,34/43
+zowe/zowe-cli-mq-plugin,integration,2,,,,
+zowe/zowe-cli-mq-plugin,system,3,,,,
+zowe/zowe-cli-scs-plugin,unit,23,72.00,108/150,71.43,50/70
+zowe/zowe-cli-scs-plugin,system,11,,,,
