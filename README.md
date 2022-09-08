@@ -1,5 +1,7 @@
 # Zowe CLI Coverage
 
+**This project is no longer maintained since it has been migrated [here](https://github.com/zowe/zowe-cli-standalone-package/actions/workflows/zowe-cli-coverage.yaml).**
+
 Calculates test coverage metrics for Zowe CLI and plugins.
 
 ## Configure Projects
